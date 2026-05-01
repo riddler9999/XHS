@@ -19,9 +19,7 @@
     --mono: 'Space Mono', monospace;
     --burmese: 'Noto Sans Myanmar', sans-serif;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   body {
     background: var(--bg);
     color: var(--text);
@@ -34,24 +32,14 @@
     position: relative;
     overflow-x: hidden;
   }
-
-  /* Scanline overlay */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(255,255,255,0.012) 2px,
-      rgba(255,255,255,0.012) 4px
-    );
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.012) 2px, rgba(255,255,255,0.012) 4px);
     pointer-events: none;
     z-index: 999;
   }
-
-  /* Red corner accent */
   body::after {
     content: '';
     position: fixed;
@@ -60,337 +48,74 @@
     background: radial-gradient(circle at top right, rgba(255,62,62,0.12), transparent 70%);
     pointer-events: none;
   }
-
-  .header {
-    width: 100%;
-    max-width: 720px;
-    margin-bottom: 56px;
-    position: relative;
-  }
-
-  .header-tag {
-    font-size: 10px;
-    letter-spacing: 4px;
-    color: var(--accent);
-    text-transform: uppercase;
-    margin-bottom: 12px;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards 0.1s;
-  }
-
-  h1 {
-    font-size: clamp(28px, 5vw, 42px);
-    font-weight: 700;
-    letter-spacing: -1px;
-    line-height: 1.1;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards 0.2s;
-  }
-
-  h1 span {
-    color: var(--accent);
-  }
-
-  .subtitle {
-    margin-top: 10px;
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 1px;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards 0.3s;
-  }
-
-  /* Steps indicator */
-  .steps {
-    display: flex;
-    gap: 0;
-    margin-bottom: 40px;
-    width: 100%;
-    max-width: 720px;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards 0.4s;
-  }
-
-  .step {
-    flex: 1;
-    padding: 10px 0;
-    text-align: center;
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    border-bottom: 2px solid var(--border);
-    color: var(--muted);
-    transition: all 0.3s ease;
-    cursor: default;
-  }
-
-  .step.active {
-    border-bottom-color: var(--accent);
-    color: var(--text);
-  }
-
-  .step.done {
-    border-bottom-color: var(--success);
-    color: var(--success);
-  }
-
-  /* Cards */
-  .card {
-    width: 100%;
-    max-width: 720px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 32px;
-    margin-bottom: 16px;
-    position: relative;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards 0.5s;
-    display: none;
-  }
-
+  .header { width: 100%; max-width: 720px; margin-bottom: 56px; }
+  .header-tag { font-size: 10px; letter-spacing: 4px; color: var(--accent); text-transform: uppercase; margin-bottom: 12px; opacity: 0; animation: fadeUp 0.6s ease forwards 0.1s; }
+  h1 { font-size: clamp(28px, 5vw, 42px); font-weight: 700; letter-spacing: -1px; line-height: 1.1; opacity: 0; animation: fadeUp 0.6s ease forwards 0.2s; }
+  h1 span { color: var(--accent); }
+  .subtitle { margin-top: 10px; font-size: 12px; color: var(--muted); letter-spacing: 1px; opacity: 0; animation: fadeUp 0.6s ease forwards 0.3s; }
+  .steps { display: flex; gap: 0; margin-bottom: 40px; width: 100%; max-width: 720px; opacity: 0; animation: fadeUp 0.6s ease forwards 0.4s; }
+  .step { flex: 1; padding: 10px 0; text-align: center; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; border-bottom: 2px solid var(--border); color: var(--muted); transition: all 0.3s ease; }
+  .step.active { border-bottom-color: var(--accent); color: var(--text); }
+  .step.done { border-bottom-color: var(--success); color: var(--success); }
+  .card { width: 100%; max-width: 720px; background: var(--surface); border: 1px solid var(--border); padding: 32px; margin-bottom: 16px; position: relative; opacity: 0; animation: fadeUp 0.6s ease forwards 0.5s; display: none; }
   .card.visible { display: block; }
-
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 3px; height: 100%;
-    background: var(--accent);
-  }
-
-  .card-title {
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 20px;
-  }
-
-  /* Input */
-  .input-group {
-    display: flex;
-    gap: 12px;
-    align-items: stretch;
-  }
-
-  input[type="text"], textarea {
-    flex: 1;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: var(--mono);
-    font-size: 13px;
-    padding: 14px 16px;
-    outline: none;
-    transition: border-color 0.2s;
-    resize: none;
-  }
-
-  input[type="text"]:focus, textarea:focus {
-    border-color: var(--accent);
-  }
-
-  input[type="text"]::placeholder, textarea::placeholder {
-    color: var(--muted);
-  }
-
-  textarea {
-    min-height: 320px;
-    line-height: 1.8;
-    font-family: var(--burmese);
-    font-size: 14px;
-  }
-
-  /* Buttons */
-  .btn {
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 14px 28px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    position: relative;
-    white-space: nowrap;
-  }
-
-  .btn:hover:not(:disabled) {
-    background: #ff5555;
-    transform: translateY(-1px);
-  }
-
-  .btn:active:not(:disabled) {
-    transform: translateY(0);
-  }
-
-  .btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-
-  .btn-outline {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-  }
-
-  .btn-outline:hover:not(:disabled) {
-    border-color: var(--text);
-    color: var(--text);
-    background: transparent;
-  }
-
-  .btn-success {
-    background: var(--success);
-    color: #000;
-  }
-
-  .btn-success:hover:not(:disabled) {
-    background: #33ff8f;
-  }
-
-  /* Status bar */
-  .status-bar {
-    width: 100%;
-    max-width: 720px;
-    padding: 12px 16px;
-    font-size: 11px;
-    letter-spacing: 1px;
-    border-left: 3px solid var(--muted);
-    margin-bottom: 16px;
-    display: none;
-    animation: fadeUp 0.3s ease forwards;
-  }
-
+  .card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--accent); }
+  .card-title { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+  .input-group { display: flex; gap: 12px; align-items: stretch; }
+  input[type="text"], textarea { flex: 1; background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 13px; padding: 14px 16px; outline: none; transition: border-color 0.2s; resize: none; }
+  input[type="text"]:focus, textarea:focus { border-color: var(--accent); }
+  input[type="text"]::placeholder, textarea::placeholder { color: var(--muted); }
+  textarea { min-height: 320px; line-height: 1.8; font-family: var(--burmese); font-size: 14px; }
+  .btn { background: var(--accent); color: #fff; border: none; font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; padding: 14px 28px; cursor: pointer; transition: all 0.15s ease; white-space: nowrap; }
+  .btn:hover:not(:disabled) { background: #ff5555; transform: translateY(-1px); }
+  .btn:active:not(:disabled) { transform: translateY(0); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+  .btn-outline:hover:not(:disabled) { border-color: var(--text); color: var(--text); background: transparent; }
+  .btn-success { background: var(--success); color: #000; }
+  .btn-success:hover:not(:disabled) { background: #33ff8f; }
+  .btn-dl { background: transparent; border: 1px solid; font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; padding: 12px 24px; cursor: pointer; transition: all 0.15s ease; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-dl-video { border-color: var(--accent2); color: var(--accent2); }
+  .btn-dl-video:hover { background: rgba(255,140,0,0.1); }
+  .btn-dl-audio { border-color: var(--success); color: var(--success); }
+  .btn-dl-audio:hover { background: rgba(0,230,118,0.1); }
+  .status-bar { width: 100%; max-width: 720px; padding: 12px 16px; font-size: 11px; letter-spacing: 1px; border-left: 3px solid var(--muted); margin-bottom: 16px; display: none; animation: fadeUp 0.3s ease forwards; }
   .status-bar.visible { display: block; }
   .status-bar.loading { border-left-color: var(--accent2); color: var(--accent2); }
   .status-bar.success { border-left-color: var(--success); color: var(--success); }
   .status-bar.error { border-left-color: var(--accent); color: var(--accent); }
-
-  /* Spinner */
-  .spinner {
-    display: inline-block;
-    width: 10px; height: 10px;
-    border: 1px solid currentColor;
-    border-top-color: transparent;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    margin-right: 8px;
-    vertical-align: middle;
-  }
-
-  /* Job ID display */
-  .job-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    padding: 6px 12px;
-    font-size: 11px;
-    color: var(--muted);
-    margin-bottom: 20px;
-  }
-
+  .spinner { display: inline-block; width: 10px; height: 10px; border: 1px solid currentColor; border-top-color: transparent; border-radius: 50%; animation: spin 0.7s linear infinite; margin-right: 8px; vertical-align: middle; }
+  .job-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--bg); border: 1px solid var(--border); padding: 6px 12px; font-size: 11px; color: var(--muted); margin-bottom: 20px; }
   .job-badge span { color: var(--accent2); }
-
-  /* Script meta */
-  .script-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-  }
-
-  .char-count {
-    font-size: 11px;
-    color: var(--muted);
-  }
-
+  .script-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .char-count { font-size: 11px; color: var(--muted); }
   .char-count.warn { color: var(--accent2); }
-
-  /* Button row */
-  .btn-row {
-    display: flex;
-    gap: 10px;
-    margin-top: 16px;
-    flex-wrap: wrap;
-  }
-
-  /* Download result */
-  .result-box {
-    background: var(--bg);
-    border: 1px solid var(--success);
-    padding: 20px;
-    margin-top: 16px;
-  }
-
-  .result-box .label {
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--success);
-    margin-bottom: 8px;
-  }
-
-  .result-box .path {
-    font-size: 12px;
-    color: var(--text);
-    word-break: break-all;
-  }
-
-  /* Log */
-  .log {
-    width: 100%;
-    max-width: 720px;
-    margin-top: 8px;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards 0.6s;
-  }
-
-  .log-title {
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--muted);
-    margin-bottom: 8px;
-    text-transform: uppercase;
-  }
-
-  .log-entries {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 12px 16px;
-    max-height: 120px;
-    overflow-y: auto;
-    font-size: 11px;
-    color: var(--muted);
-    line-height: 2;
-  }
-
+  .btn-row { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+  .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+  .result-box { background: var(--bg); border: 1px solid var(--border); padding: 20px; }
+  .result-box.highlight { border-color: var(--success); }
+  .result-box .label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+  .result-box.highlight .label { color: var(--success); }
+  .result-box .label { color: var(--muted); }
+  .result-box .path { font-size: 11px; color: var(--text); word-break: break-all; margin-bottom: 16px; line-height: 1.6; }
+  .dl-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .progress-bar { width: 100%; height: 2px; background: var(--border); margin-top: 16px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); width: 0%; transition: width 0.3s ease; animation: progress-pulse 2s ease infinite; }
+  @keyframes progress-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
+  .log { width: 100%; max-width: 720px; margin-top: 8px; opacity: 0; animation: fadeUp 0.6s ease forwards 0.6s; }
+  .log-title { font-size: 10px; letter-spacing: 2px; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; }
+  .log-entries { background: var(--surface); border: 1px solid var(--border); padding: 12px 16px; max-height: 120px; overflow-y: auto; font-size: 11px; color: var(--muted); line-height: 2; }
   .log-entry { display: flex; gap: 12px; }
   .log-entry .ts { color: #333; flex-shrink: 0; }
-  .log-entry .msg { }
   .log-entry.ok .msg { color: var(--success); }
   .log-entry.err .msg { color: var(--accent); }
   .log-entry.info .msg { color: var(--accent2); }
-
-  /* Animations */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-
-  /* Responsive */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes spin { to { transform: rotate(360deg); } }
   @media (max-width: 600px) {
-    .input-group { flex-direction: column; }
-    .btn-row { flex-direction: column; }
-    .btn { text-align: center; }
+    .input-group, .btn-row, .dl-row { flex-direction: column; }
+    .result-grid { grid-template-columns: 1fr; }
+    .btn, .btn-dl { text-align: center; justify-content: center; }
   }
 </style>
 </head>
@@ -409,7 +134,6 @@
   <div class="step" id="step4">04 · Done</div>
 </div>
 
-<!-- STATUS BAR -->
 <div class="status-bar" id="statusBar"></div>
 
 <!-- STEP 1: URL Input -->
@@ -441,16 +165,33 @@
   <div class="card-title">// Generating Voiceover</div>
   <p style="font-size:13px;color:var(--muted);line-height:2">
     <span class="spinner"></span>
-    Gemini TTS generating audio chunks... This may take 1–3 minutes.
+    Gemini TTS (Puck) generating audio chunks... This may take 1–3 minutes.
   </p>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 </div>
 
 <!-- STEP 4: Done -->
 <div class="card" id="cardDone">
-  <div class="card-title">// Voiceover Ready</div>
-  <div class="result-box">
-    <div class="label">Output File (VPS)</div>
-    <div class="path" id="outputPath">—</div>
+  <div class="card-title">// Complete</div>
+  <div class="result-grid">
+    <div class="result-box highlight">
+      <div class="label">Voiceover (WAV)</div>
+      <div class="path" id="audioPath">—</div>
+      <div class="dl-row">
+        <a class="btn-dl btn-dl-audio" id="dlAudioBtn" href="#" onclick="downloadFile('audio'); return false;">
+          ↓ Download WAV
+        </a>
+      </div>
+    </div>
+    <div class="result-box">
+      <div class="label">Original Video (MP4)</div>
+      <div class="path" id="videoPath">—</div>
+      <div class="dl-row">
+        <a class="btn-dl btn-dl-video" id="dlVideoBtn" href="#" onclick="downloadFile('video'); return false;">
+          ↓ Download MP4
+        </a>
+      </div>
+    </div>
   </div>
   <div class="btn-row" style="margin-top:20px">
     <button class="btn btn-outline" onclick="resetAll()">New Video</button>
@@ -467,11 +208,11 @@
 
 <script>
   const N8N_BASE = 'https://n8n.srv1235044.hstgr.cloud/webhook';
-  const SUBMIT_URL = N8N_BASE + '/xhs-v3';
+  const SUBMIT_URL  = N8N_BASE + '/xhs-v3';
   const APPROVE_URL = N8N_BASE + '/xhs-approve';
+  const DOWNLOAD_URL = N8N_BASE + '/xhs-download';
 
   let currentJobId = '';
-  let currentScript = '';
 
   function log(msg, type = 'info') {
     const el = document.getElementById('logEntries');
@@ -486,9 +227,7 @@
   function setStatus(msg, type = 'loading') {
     const bar = document.getElementById('statusBar');
     bar.className = `status-bar visible ${type}`;
-    bar.innerHTML = type === 'loading'
-      ? `<span class="spinner"></span>${msg}`
-      : msg;
+    bar.innerHTML = type === 'loading' ? `<span class="spinner"></span>${msg}` : msg;
   }
 
   function clearStatus() {
@@ -497,8 +236,7 @@
 
   function setStep(n) {
     ['step1','step2','step3','step4'].forEach((id, i) => {
-      const el = document.getElementById(id);
-      el.className = 'step' + (i+1 < n ? ' done' : i+1 === n ? ' active' : '');
+      document.getElementById(id).className = 'step' + (i+1 < n ? ' done' : i+1 === n ? ' active' : '');
     });
   }
 
@@ -506,11 +244,12 @@
     ['cardSubmit','cardScript','cardGenerating','cardDone'].forEach(c => {
       const el = document.getElementById(c);
       el.classList.remove('visible');
-      el.style.animation = '';
     });
-    const target = document.getElementById(id);
-    target.classList.add('visible');
-    target.style.animation = 'fadeUp 0.5s ease forwards';
+    const t = document.getElementById(id);
+    t.classList.add('visible');
+    t.style.animation = 'none';
+    t.offsetHeight;
+    t.style.animation = 'fadeUp 0.5s ease forwards';
   }
 
   function updateCharCount() {
@@ -520,15 +259,26 @@
     el.className = 'char-count' + (val.length > 8000 ? ' warn' : '');
   }
 
+  // Animate progress bar during TTS generation
+  function animateProgress() {
+    const fill = document.getElementById('progressFill');
+    let pct = 0;
+    const iv = setInterval(() => {
+      // Slow approach to 90%, never reaches 100 until done
+      pct += (90 - pct) * 0.015;
+      fill.style.width = pct + '%';
+    }, 500);
+    return iv;
+  }
+
   async function submitUrl() {
     const url = document.getElementById('videoUrl').value.trim();
     if (!url) return;
-
     const btn = document.getElementById('btnSubmit');
     btn.disabled = true;
     btn.textContent = 'Processing...';
-    setStatus('Downloading video and transcribing... (~2–5 min)', 'loading');
-    log(`Submitting: ${url.slice(0,50)}...`, 'info');
+    setStatus('Downloading & transcribing... (~2–5 min)', 'loading');
+    log(`Submitting: ${url.slice(0,60)}...`, 'info');
 
     try {
       const res = await fetch(SUBMIT_URL, {
@@ -536,26 +286,22 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ videoUrl: url })
       });
-
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
 
       if (data.status === 'awaiting_approval' && data.script) {
         currentJobId = data.jobId || '';
-        currentScript = data.script;
-
         document.getElementById('jobIdDisplay').textContent = currentJobId;
-        document.getElementById('scriptEditor').value = currentScript;
+        document.getElementById('scriptEditor').value = data.script;
         updateCharCount();
-
         clearStatus();
         setStep(2);
         showCard('cardScript');
-        log(`Script received — ${currentScript.length} chars. Job: ${currentJobId}`, 'ok');
+        log(`Script ready — ${data.script.length} chars | Job: ${currentJobId}`, 'ok');
       } else {
         throw new Error(data.message || 'Unexpected response');
       }
-    } catch (err) {
+    } catch(err) {
       setStatus(`Error: ${err.message}`, 'error');
       log(`Failed: ${err.message}`, 'err');
       btn.disabled = false;
@@ -566,7 +312,6 @@
   async function approveScript() {
     const script = document.getElementById('scriptEditor').value.trim();
     if (!script || !currentJobId) return;
-
     const btn = document.getElementById('btnApprove');
     btn.disabled = true;
     setStep(3);
@@ -574,26 +319,32 @@
     setStatus('Generating voiceover with Gemini TTS (Puck)...', 'loading');
     log(`Approving script (${script.length} chars) → TTS...`, 'info');
 
+    const progressIv = animateProgress();
+
     try {
       const res = await fetch(APPROVE_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ jobId: currentJobId, finalScript: script })
       });
-
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
 
+      clearInterval(progressIv);
+      document.getElementById('progressFill').style.width = '100%';
+
       if (data.status === 'done') {
-        document.getElementById('outputPath').textContent = data.outputFile || 'VPS output ready';
+        document.getElementById('audioPath').textContent = data.outputFile || 'voiceover_final.wav';
+        document.getElementById('videoPath').textContent = `/tmp/xhs/${currentJobId}/processed.mp4`;
         clearStatus();
         setStep(4);
         showCard('cardDone');
-        log(`Voiceover done → ${data.outputFile}`, 'ok');
+        log(`Done → ${data.outputFile}`, 'ok');
       } else {
         throw new Error(data.message || 'TTS failed');
       }
-    } catch (err) {
+    } catch(err) {
+      clearInterval(progressIv);
       setStatus(`Error: ${err.message}`, 'error');
       log(`TTS failed: ${err.message}`, 'err');
       showCard('cardScript');
@@ -602,12 +353,47 @@
     }
   }
 
+  async function downloadFile(type) {
+    if (!currentJobId) return;
+    const btnId = type === 'audio' ? 'dlAudioBtn' : 'dlVideoBtn';
+    const btn = document.getElementById(btnId);
+    const origText = btn.innerHTML;
+    btn.innerHTML = '<span class="spinner"></span> Downloading...';
+    btn.style.pointerEvents = 'none';
+    log(`Requesting ${type} download...`, 'info');
+
+    try {
+      const url = `${DOWNLOAD_URL}?jobId=${encodeURIComponent(currentJobId)}&file=${type}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const blob = await res.blob();
+      const filename = type === 'audio' ? 'voiceover.wav' : 'video.mp4';
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+
+      log(`${filename} downloaded (${(blob.size/1024/1024).toFixed(1)} MB)`, 'ok');
+      btn.innerHTML = '✓ Downloaded';
+      setTimeout(() => { btn.innerHTML = origText; btn.style.pointerEvents = ''; }, 3000);
+    } catch(err) {
+      log(`Download failed: ${err.message}`, 'err');
+      btn.innerHTML = origText;
+      btn.style.pointerEvents = '';
+    }
+  }
+
   function resetAll() {
     currentJobId = '';
-    currentScript = '';
     document.getElementById('videoUrl').value = '';
     document.getElementById('scriptEditor').value = '';
-    document.getElementById('outputPath').textContent = '—';
+    document.getElementById('audioPath').textContent = '—';
+    document.getElementById('videoPath').textContent = '—';
+    document.getElementById('progressFill').style.width = '0%';
     document.getElementById('btnSubmit').disabled = false;
     document.getElementById('btnSubmit').textContent = 'Submit';
     document.getElementById('btnApprove').disabled = false;
@@ -617,7 +403,6 @@
     log('Reset. Ready for new URL.', 'info');
   }
 
-  // Enter key on URL input
   document.getElementById('videoUrl').addEventListener('keydown', e => {
     if (e.key === 'Enter') submitUrl();
   });
